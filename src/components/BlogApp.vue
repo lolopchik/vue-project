@@ -1,5 +1,5 @@
 <script>
-import BlogPost from './BlogPost.vue';
+import BlogPost from './BlogPostTemplate.vue';
 export default {
   components: {
     BlogPost
@@ -48,7 +48,15 @@ export default {
     };
   },
   methods: {
-
+    fontSizeDecrease() {
+      this.fontSize--
+    },
+    fontSizeIncrease() {
+      this.fontSize++
+    },
+    fontSizeSet(fontSize) {
+      this.fontSize = fontSize
+   }
   }
 };
 </script>
@@ -63,9 +71,11 @@ export default {
   </header>
   <main class="container">
     <h2>Посты:</h2>
-    <div class="row g-2">
+    <div class="row g-2" >
       <!-- Вывод всех постов -->
-      <div class="col-12">
+      
+      <div class="col-12" v-for="post in posts">
+        <BlogPost :post="post" :fontSize="fontSize" @fontSizeIncrease="fontSizeIncrease" @fontSizeDecrease="fontSizeDecrease" @fontSizeSet="fontSizeSet"></BlogPost>
         <!-- Тут должен быть пост -->
       </div>
     </div>

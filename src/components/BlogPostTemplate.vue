@@ -1,7 +1,8 @@
 <script>
 export default {
     props: {
-
+        post: Object,
+        fontSize: Number,
     },
     data() {
         return {
@@ -19,29 +20,28 @@ export default {
                 dy=".3em">Thumbnail</text>
         </svg>
         <div class="card-body">
-            <p class="card-subtitle text-secondary">Автор поста</p>
-            <h3 class="card-title">Заголовок поста</h3>
-            <p class="card-text">Текст поста</p>
+            <p class="card-subtitle text-secondary">{{post.author}}</p>
+            <h3 class="card-title">{{post.title}}</h3>
+            <p class="card-text" :style="{ 'font-size': fontSize + 'px' }">{{ post.text }}</p>
             <div class="d-flex justify-content-between align-items-center ">
                 <div class="btn-group">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">-</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">+</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" @click="$emit('fontSizeDecrease')">-</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" @click="$emit('fontSizeIncrease')">+</button>
                     </div>
-                    <!-- <input v-model="fontSizeNew" class="form-control ms-3" type="text" placeholder="px" style="width: 50px;">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Установить</button> -->
+                    <input v-model="fontSizeNew" class="form-control ms-3" type="text" placeholder="px" style="width: 50px;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" @click="$emit('fontSizeSet', fontSizeNew)">Установить</button> 
 
                 </div>
-                <small class="text-body-secondary">Дата поста</small>
+                <small class="text-body-secondary">{{post.date}}</small>
             </div>
 
             <hr>
             <h4>Комментарии:</h4>
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" >
                 <!-- Вывод всех комментарии -->
-                <li class="list-group-item" >Аноним: Я аноним</li>
+                <li class="list-group-item" v-for="comment in post.comments">Аноним: {{comment}}</li>
             </ul>
-
         </div>
     </div>
 </template>
